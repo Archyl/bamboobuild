@@ -1,6 +1,6 @@
 package buildrun;
 
-import org.junit.AfterClass;
+import com.codeborne.selenide.Selenide;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,7 +8,6 @@ import org.junit.runners.JUnit4;
 import org.openqa.selenium.WebDriver;
 import pages.BuildPage;
 import pages.LoginPage;
-import utils.WebDriverUtil;
 
 @RunWith(JUnit4.class)
 public class RunBuildTest {
@@ -36,21 +35,22 @@ public class RunBuildTest {
 
     @BeforeClass
     public static void startDriver() {
-        driver = WebDriverUtil.getDriver();
+        //driver = WebDriverUtil.getDriver();
+        Selenide.open(BAMBOO_URL);
     }
 
-    @AfterClass
-    public static void stopDriver() {
-        WebDriverUtil.stopService();
-    }
+//    @AfterClass
+//    public static void stopDriver() {
+//        WebDriverUtil.stopService();
+//    }
 
     @Test
     public void runBuildTest() {
-        driver.get(BAMBOO_URL);
+        //driver.get(BAMBOO_URL);
         loginPage.loginToBamboo(LOGIN, PASSWORD);
         switch(System.getProperty("env")) {
             case "fqa1" :
-                driver.get(URL_TO_DEPLOY_FQA1);
+                //driver.get(URL_TO_DEPLOY_FQA1);
                 buildPage.selectCreateNewReleaseRadiobutton();
                 buildPage.openPlanBranchSelect();
                 buildPage.selectDevelopBranch();
@@ -58,7 +58,7 @@ public class RunBuildTest {
                 //buildPage.clickExecuteButton();
                 break;
             case "fqa2" :
-                driver.get(URL_TO_DEPLOY_FQA2);
+                //driver.get(URL_TO_DEPLOY_FQA2);
                 buildPage.selectCreateNewReleaseRadiobutton();
                 buildPage.openPlanBranchSelect();
                 buildPage.selectLastRelease();
@@ -66,7 +66,8 @@ public class RunBuildTest {
               //  buildPage.clickExecuteButton();
                 break;
             case "aqa" :
-                driver.get(URL_TO_DEPLOY_AQA);
+                //driver.get(URL_TO_DEPLOY_AQA);
+                Selenide.open(URL_TO_DEPLOY_AQA);
                 buildPage.selectCreateNewReleaseRadiobutton();
                 buildPage.openPlanBranchSelect();
                 buildPage.selectLastRelease();
