@@ -39,6 +39,8 @@ public class RunBuildTest {
     public static void startDriver() {
         if (System.getProperty("os.name").toLowerCase().contains("mac")) {
             System.setProperty("webdriver.chrome.driver", DRIVER_PATH + "mac/chromedriver");
+        } else if (System.getProperty("os.name").toLowerCase().contains("win")) {
+            System.setProperty("webdriver.chrome.driver", DRIVER_PATH + "win/chromedriver");
         } else {
             System.setProperty("webdriver.chrome.driver", DRIVER_PATH + "linux/chromedriver");
         }
