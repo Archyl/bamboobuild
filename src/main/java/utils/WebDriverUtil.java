@@ -72,7 +72,6 @@ public class WebDriverUtil {
         options.addArguments("--no-sandbox");
         options.addArguments("--verbose");
         options.addArguments("--disable-impl-side-painting");
-        options.setBinary("/bin/google-chrome");
         Map<String, Object> prefs = new HashMap<String, Object>();
         prefs.put("credentials_enable_service", false);
         prefs.put("profile.password_manager_enabled", false);
