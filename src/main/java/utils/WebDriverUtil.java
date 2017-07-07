@@ -71,6 +71,7 @@ public class WebDriverUtil {
         options.addArguments("--disable-notifications");
         options.addArguments("--no-sandbox");
         options.addArguments("--verbose");
+        options.addArguments("--disable-impl-side-painting");
         Map<String, Object> prefs = new HashMap<String, Object>();
         prefs.put("credentials_enable_service", false);
         prefs.put("profile.password_manager_enabled", false);
