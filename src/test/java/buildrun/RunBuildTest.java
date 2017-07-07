@@ -40,7 +40,7 @@ public class RunBuildTest {
         if (System.getProperty("os.name").toLowerCase().contains("mac")) {
             System.setProperty("webdriver.chrome.driver", DRIVER_PATH + "mac/chromedriver");
         } else if (System.getProperty("os.name").toLowerCase().contains("win")) {
-            System.setProperty("webdriver.chrome.driver", DRIVER_PATH + "win/chromedriver");
+            System.setProperty("webdriver.chrome.driver", DRIVER_PATH + "win/chromedriver.exe");
         } else {
             System.setProperty("webdriver.chrome.driver", DRIVER_PATH + "linux/chromedriver");
         }
