@@ -3,6 +3,7 @@ package utils;
 import com.codeborne.selenide.WebDriverRunner;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -58,7 +60,26 @@ public class WebDriverUtil {
     }
 
     public static WebDriver createDriver() {
-        WebDriver driver = new RemoteWebDriver(getChromeDriverService().getUrl(), DesiredCapabilities.chrome());
+        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("disable-infobars");
+        options.addArguments("--start-maximized");
+        options.addArguments("--disable-web-security");
+        options.addArguments("--no-proxy-server");
+        options.addArguments("--disable-extensions");
+        options.addArguments("--disable-translate");
+        options.addArguments("--disable-notifications");
+        options.addArguments("--no-sandbox");
+        Map<String, Object> prefs = new HashMap<String, Object>();
+        prefs.put("credentials_enable_service", false);
+        prefs.put("profile.password_manager_enabled", false);
+        options.setExperimentalOption("prefs", prefs);
+        capabilities = DesiredCapabilities.chrome();
+        capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+        capabilities.setCapability("credentials_enable_service", false);
+        capabilities.setCapability("password_manager_enabled", false);
+        capabilities.setCapability("Options_PasswordManager", false);
+        WebDriver driver = new RemoteWebDriver(getChromeDriverService().getUrl(), capabilities);
         setupSelenide(driver);
         return driver;
     }
