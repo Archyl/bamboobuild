@@ -72,7 +72,7 @@ public class RunBuildTest {
                 buildPage.openPlanBranchSelect();
                 buildPage.selectLastRelease();
                 buildPage.setReleaseVersion();
-                buildPage.clickExecuteButton();
+                //buildPage.clickExecuteButton();
                 break;
             default:
                 throw new IllegalStateException(System.getProperty("env") + "is not supported environment");
