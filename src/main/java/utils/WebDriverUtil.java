@@ -70,6 +70,7 @@ public class WebDriverUtil {
         options.addArguments("--disable-translate");
         options.addArguments("--disable-notifications");
         options.addArguments("--no-sandbox");
+        options.addArguments("--verbose");
         Map<String, Object> prefs = new HashMap<String, Object>();
         prefs.put("credentials_enable_service", false);
         prefs.put("profile.password_manager_enabled", false);
