@@ -1,20 +1,18 @@
 package buildrun;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-
+import org.openqa.selenium.WebDriver;
 import pages.BuildPage;
 import pages.LoginPage;
-
-import static com.codeborne.selenide.Selenide.open;
+import utils.WebDriverUtil;
 
 @RunWith(JUnit4.class)
 public class RunBuildTest {
 
-    static final String DRIVER_PATH = System.getProperty("project.basedir")
-            + "/src/main/resources/chrome/";
     private static final String BAMBOO_URL = "https://amway-prod.tt.com.pl/bamboo/allPlans.action";
     private static final String URL_TO_DEPLOY_FQA1 = "https://amway-prod.tt.com.pl/bamboo/deploy"
             + "/selectVersionForExecute.action?environmentId=2326531&returnUrl=/deploy"
@@ -29,6 +27,7 @@ public class RunBuildTest {
 
     private LoginPage loginPage;
     private BuildPage buildPage;
+    private static WebDriver driver;
 
     public RunBuildTest() {
         loginPage = new LoginPage();
@@ -37,21 +36,21 @@ public class RunBuildTest {
 
     @BeforeClass
     public static void startDriver() {
-        if (System.getProperty("os.name").toLowerCase().contains("mac")) {
-            System.setProperty("webdriver.chrome.driver", DRIVER_PATH + "mac/chromedriver");
-        } else {
-            System.setProperty("webdriver.chrome.driver", DRIVER_PATH + "linux/chromedriver");
-        }
-        System.setProperty("selenide.browser", "chrome");
-        open(BAMBOO_URL);
+        driver = WebDriverUtil.getDriver();
+    }
+
+    @AfterClass
+    public static void stopDriver() {
+        WebDriverUtil.stopService();
     }
 
     @Test
     public void runBuildTest() {
+        driver.get(BAMBOO_URL);
         loginPage.loginToBamboo(LOGIN, PASSWORD);
         switch(System.getProperty("env")) {
             case "fqa1" :
-                open(URL_TO_DEPLOY_FQA1);
+                driver.get(URL_TO_DEPLOY_FQA1);
                 buildPage.selectCreateNewReleaseRadiobutton();
                 buildPage.openPlanBranchSelect();
                 buildPage.selectDevelopBranch();
@@ -59,7 +58,7 @@ public class RunBuildTest {
                 //buildPage.clickExecuteButton();
                 break;
             case "fqa2" :
-                open(URL_TO_DEPLOY_FQA2);
+                driver.get(URL_TO_DEPLOY_FQA2);
                 buildPage.selectCreateNewReleaseRadiobutton();
                 buildPage.openPlanBranchSelect();
                 buildPage.selectLastRelease();
@@ -67,7 +66,7 @@ public class RunBuildTest {
               //  buildPage.clickExecuteButton();
                 break;
             case "aqa" :
-                open(URL_TO_DEPLOY_AQA);
+                driver.get(URL_TO_DEPLOY_AQA);
                 buildPage.selectCreateNewReleaseRadiobutton();
                 buildPage.openPlanBranchSelect();
                 buildPage.selectLastRelease();
