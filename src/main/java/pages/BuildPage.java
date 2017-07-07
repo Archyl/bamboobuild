@@ -2,6 +2,8 @@ package pages;
 
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,6 +13,7 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class BuildPage {
 
+    private static final Logger LOG = LoggerFactory.getLogger(BuildPage.class);
     private By createNewReleaseRadiobutton = By.xpath(".//input[@id='releaseTypeCreateOption']");
     private By planBranchSelect = By.xpath(".//div[@id='s2id_newReleaseBranchKey']/a");
     private By searchBranchInput = By.xpath(".//div[@id='select2-drop']/div/input");
@@ -49,6 +52,7 @@ public class BuildPage {
 
     public void setDevelopBuildNumber() {
         $(releaseVersionInput).setValue("develop-" + getArtifactNumber() + "-monkey");
+        LOG.info("build version = " + $(releaseVersionInput).getValue());
     }
 
     public void clickExecuteButton() {
@@ -85,6 +89,7 @@ public class BuildPage {
 
         }
         $(releaseVersionInput).setValue($(releaseVersionInput).getValue() + "-monkey");
+        LOG.info("release version to build = " + $(releaseVersionInput).getValue());
     }
 
     private String getArtifactNumber() {

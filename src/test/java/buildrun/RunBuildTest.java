@@ -72,11 +72,6 @@ public class RunBuildTest {
                 buildPage.openPlanBranchSelect();
                 buildPage.selectLastRelease();
                 buildPage.setReleaseVersion();
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-
-                }
                 buildPage.clickExecuteButton();
                 break;
             default:
