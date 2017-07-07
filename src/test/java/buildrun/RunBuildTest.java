@@ -1,13 +1,13 @@
 package buildrun;
 
-import com.codeborne.selenide.Selenide;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.openqa.selenium.WebDriver;
 import pages.BuildPage;
 import pages.LoginPage;
+
+import static com.codeborne.selenide.Selenide.open;
 
 @RunWith(JUnit4.class)
 public class RunBuildTest {
@@ -28,7 +28,6 @@ public class RunBuildTest {
 
     private LoginPage loginPage;
     private BuildPage buildPage;
-    private static WebDriver driver;
 
     public RunBuildTest() {
         loginPage = new LoginPage();
@@ -45,44 +44,36 @@ public class RunBuildTest {
             System.setProperty("webdriver.chrome.driver", DRIVER_PATH + "linux/chromedriver");
         }
         System.setProperty("selenide.browser", "chrome");
-        Selenide.open(BAMBOO_URL);
+        open(BAMBOO_URL);
     }
-
-
-//    @AfterClass
-//    public static void stopDriver() {
-//        WebDriverUtil.stopService();
-//    }
 
     @Test
     public void runBuildTest() {
-        //driver.get(BAMBOO_URL);
         loginPage.loginToBamboo(LOGIN, PASSWORD);
         switch(System.getProperty("env")) {
             case "fqa1" :
-                //driver.get(URL_TO_DEPLOY_FQA1);
+                open(URL_TO_DEPLOY_FQA1);
                 buildPage.selectCreateNewReleaseRadiobutton();
                 buildPage.openPlanBranchSelect();
                 buildPage.selectDevelopBranch();
                 buildPage.setDevelopBuildNumber();
-                //buildPage.clickExecuteButton();
+                buildPage.clickExecuteButton();
                 break;
             case "fqa2" :
-                //driver.get(URL_TO_DEPLOY_FQA2);
+                open(URL_TO_DEPLOY_FQA2);
                 buildPage.selectCreateNewReleaseRadiobutton();
                 buildPage.openPlanBranchSelect();
                 buildPage.selectLastRelease();
                 buildPage.setReleaseVersion();
-              //  buildPage.clickExecuteButton();
+                buildPage.clickExecuteButton();
                 break;
             case "aqa" :
-                //driver.get(URL_TO_DEPLOY_AQA);
-                Selenide.open(URL_TO_DEPLOY_AQA);
+                open(URL_TO_DEPLOY_AQA);
                 buildPage.selectCreateNewReleaseRadiobutton();
                 buildPage.openPlanBranchSelect();
                 buildPage.selectLastRelease();
                 buildPage.setReleaseVersion();
-                //buildPage.clickExecuteButton();
+                buildPage.clickExecuteButton();
                 break;
             default:
                 throw new IllegalStateException(System.getProperty("env") + "is not supported environment");
