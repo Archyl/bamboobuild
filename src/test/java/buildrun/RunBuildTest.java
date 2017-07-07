@@ -12,6 +12,8 @@ import pages.LoginPage;
 @RunWith(JUnit4.class)
 public class RunBuildTest {
 
+    private static final String DRIVER_PATH = System.getProperty("project.basedir")
+            + "/src/main/resources/chrome/";
     private static final String BAMBOO_URL = "https://amway-prod.tt.com.pl/bamboo/allPlans.action";
     private static final String URL_TO_DEPLOY_FQA1 = "https://amway-prod.tt.com.pl/bamboo/deploy"
             + "/selectVersionForExecute.action?environmentId=2326531&returnUrl=/deploy"
@@ -35,9 +37,15 @@ public class RunBuildTest {
 
     @BeforeClass
     public static void startDriver() {
-        //driver = WebDriverUtil.getDriver();
+        if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+            System.setProperty("webdriver.chrome.driver", DRIVER_PATH + "mac/chromedriver");
+        } else {
+            System.setProperty("webdriver.chrome.driver", DRIVER_PATH + "linux/chromedriver");
+        }
+        System.setProperty("selenide.browser", "chrome");
         Selenide.open(BAMBOO_URL);
     }
+
 
 //    @AfterClass
 //    public static void stopDriver() {
