@@ -115,6 +115,8 @@ public class WebDriverUtil {
     private static ChromeDriverService startChromeService() {
         if (isMac()) {
             System.setProperty("webdriver.chrome.driver", DRIVER_PATH + "mac/chromedriver");
+        } else if (isWindows()) {
+            System.setProperty("webdriver.chrome.driver", DRIVER_PATH + "win/chromedriver");
         } else {
             System.setProperty("webdriver.chrome.driver", DRIVER_PATH + "linux/chromedriver");
         }
@@ -139,5 +141,10 @@ public class WebDriverUtil {
     private static boolean isMac() {
         return System.getProperty("os.name").toLowerCase().contains("mac");
     }
+
+    private static boolean isWindows() {
+        return System.getProperty("os.name").toLowerCase().contains("win");
+    }
+
 
 }
