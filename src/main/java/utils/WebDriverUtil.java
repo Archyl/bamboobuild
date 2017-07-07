@@ -112,6 +112,11 @@ public class WebDriverUtil {
     }
 
     private static ChromeDriverService startChromeService() {
+        if (isMac()) {
+            System.setProperty("webdriver.chrome.driver", DRIVER_PATH + "mac/chromedriver");
+        } else {
+            System.setProperty("webdriver.chrome.driver", DRIVER_PATH + "linux/chromedriver");
+        }
         File chromeDriver;
         if (isMac()) {
             chromeDriver = new File(DRIVER_PATH + "mac/chromedriver");
@@ -119,7 +124,7 @@ public class WebDriverUtil {
             chromeDriver = new File(DRIVER_PATH + "linux/chromedriver");
         }
         ChromeDriverService service = new ChromeDriverService.Builder().usingDriverExecutable(chromeDriver)
-                .usingAnyFreePort().withVerbose(false).build();
+                .usingAnyFreePort().withVerbose(true).build();
         try {
             service.start();
         } catch (IOException e) {
