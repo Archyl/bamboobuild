@@ -26,7 +26,7 @@ public class RunBuildTest {
     private static final String URL_TO_DEPLOY_TEST = "https://amway-prod.tt.com.pl/bamboo/deploy" +
             "/selectVersionForExecute.action?environmentId=21561355";
     private static final String LOGIN = "euvogara";
-    private static final String PASSWORD = "Welcome2017";
+    private static final String PASSWORD = "Welcome2018";
 
     private LoginPage loginPage;
     private BuildPage buildPage;
@@ -81,8 +81,8 @@ public class RunBuildTest {
                 open(URL_TO_DEPLOY_TEST);
                 buildPage.selectCreateNewReleaseRadiobutton();
                 buildPage.openPlanBranchSelect();
-                buildPage.selectLastRelease();
-                buildPage.setReleaseVersion();
+                buildPage.selectDevelopBranch();
+                buildPage.setDevelopBuildNumber();
                 buildPage.clickExecuteButton();
                 break;
             default:
